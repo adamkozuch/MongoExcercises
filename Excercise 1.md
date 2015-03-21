@@ -22,7 +22,7 @@ iostat -x 1 180 > miara
  Highlited values are used in charts hence, procesor usage by user and opertaing sytem also number of packages readed and writted by secoud. Mesurement was conducted in one secund interval for 180 secounds and mongoimport was running after 60 secound .*
 *Tak wygląda wycinek zużycia procesora*
 ![](https://cloud.githubusercontent.com/assets/5136443/5564171/805759de-8ead-11e4-8296-07d0aa4b5566.PNG)
-*Blue line on chart representing percentage of processor use by user programs, grey usage of processor by operating system. In aproximetly 60m secound of mesurement I run import as we can see on chart.*
+*Blue line on chart representing percentage of processor use by user programs, gray usage of processor by operating system. In approximately 60m secound of measurement I run import as we can see on chart.*
 *Increasing and decreasing of usage of processor is very characteristic. In my opinion that phenomenon is caused
 by waiting of processor until portion of data is writtent to hard drive.I will try to prove that below.*
 * I compared ttwo ling graphs usage of processor by user and amount of data recorded to hard drive during mongoimport. We can see it below: *
@@ -140,29 +140,29 @@ Usage of RAM and CPU is fallowing:
 
 #Zadanie 1c
 
-#*wykonanie w postgres
-Tabela zawierajaca wczytane dane nazywa sie tabletrain. Aby zmienic string na tablice stringów uzywamy w postgressien polecenia
+#*Same with postgress
+Name of table with data is tabletrain. In order to change string to array of strings we use in postgress fallowing command:
 
 #####ALTER TABLE tabletrain ALTER COLUMN TAGS TYPE TEXT[] using string_to_array(tags,' ') ;
 
-Nastepnie zliczamy ilosc rekordów poleceniem
+We can count number of records by using
 
 #####Select sum(array_length(tags,1)) from tabletrain;
 ![](https://cloud.githubusercontent.com/assets/5136443/5113011/7dde53fa-702c-11e4-83d0-1c066f4980e1.png)
-W bzaie znajduje sie 17409994 tagow.
+In database there is 17409994 tags.
 
-Zeby liiczyc ilosc roznych tagow uzywamy zapytania
+In order to count number of different tags we use
 #####select  count(*) from (select distinct unnest(tags) from tabletrain) as foo. Wynik jest nastepujacy
 
 ![](https://cloud.githubusercontent.com/assets/5136443/5113015/7deae372-702c-11e4-9166-79ecdac2f85b.png)
-W bazie znajduje sie 42048 roznych tagow.
+In database there is 42048 different tags.
 
-##Druga czesc zadania
-Natomiast w drugiej czesci zadania zostal uzyty sterowniki Javy
+##Secound part
+In secound part we use Java Driver to do same thing  
 
 
-*Sterownik Java
-Zadanie jest wykonane za pomoc? nastepujacego kodu:
+*Java Driver
+Excercise is done by use following code:
 
 
 
@@ -219,6 +219,6 @@ Zadanie jest wykonane za pomoc? nastepujacego kodu:
     }
 ```
 
-Wyniki wykonania kodu sa nastepujace:
+Results of executing code:
 ![](https://cloud.githubusercontent.com/assets/5136443/5113013/7de34cac-702c-11e4-8140-3e583040edc6.png)
 Zadanie bylo realizowane przez 178 sekund.Natomiast obciazenie komputera bylo nastepujace
