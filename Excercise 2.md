@@ -2,7 +2,7 @@
 ##1.
 I use Individual household electric power consumption to prepare analysis  <a href="http://archive.ics.uci.edu/ml/datasets/Individual+household+electric+power+consumption">Individual household electric power consumption</a>. It contain almost two millions of records about usage of electric energy measured in one household for four years in one minute interval.
 
-DOcument contain fallowing attributes :<p>
+Document contain fallowing attributes :<p>
 1.date: Date in format dd/mm/yyyy<p>
 2.time: time in format hh:mm:ss<p>
 3.global_active_power: household global minute-averaged active power (in kilowatt)<p>
@@ -18,7 +18,7 @@ Import had fallowing parameters:
 ![](https://cloud.githubusercontent.com/assets/5136443/5113012/7ddf8e96-702c-11e4-90c8-c0f8fcd86316.png)
 To database was imported 2075259 objects and import lasts for 1 minute 29 secounds.
 ##3
-Before agreggation Date atribut was changed to ISODate.
+Before aggregation Date attribute was changed to ISODate.
 
 Global energy usage by month : <p>
 db.power.aggregate(
@@ -37,7 +37,7 @@ db.power.aggregate(
 Result: ![](https://cloud.githubusercontent.com/assets/5136443/5115130/e0bbe50c-703e-11e4-8153-c78a252a4445.png)
 
 ##4
-First agregation in Java:<p>
+First aggregation in Java:<p>
 DBObject groupFields = new BasicDBObject( "_id", "month: { $month: "$Date" }");
 groupFields.put("mmonthSum", new BasicDBObject( "$sum","$Global_active_power"));
 DBObject group = new BasicDBObject("$group", groupFields);
@@ -60,7 +60,7 @@ List<DBObject> pipeline = Arrays.asList(group);
 
 
 ##5
-   Chart from first agregation
+   Chart from first aggregation
    ![](https://cloud.githubusercontent.com/assets/5136443/5115350/722c5462-7040-11e4-96ec-4a8bf53a572b.png)<p>
-   Chart from secound agregation
+   Chart from second aggregation
    ![](https://cloud.githubusercontent.com/assets/5136443/5115984/1d2704a2-7046-11e4-8acf-8bd86c02aa10.png)

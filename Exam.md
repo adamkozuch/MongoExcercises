@@ -1,6 +1,6 @@
-##Część pierwsza - Przeprowadzanie MapReduce na pliku anagramy
-Po wczytaniu do bazy pliku word_list.txt do bazy 
-funkcja map wygląda następująco 
+##First part-MapReduce on anagrams file
+After importing  word_list.txt file to database map function looks like this:
+
 
 ```javascript
 function() {
@@ -10,7 +10,7 @@ word=  word.join();
   emit(word,this.word);
 }
 ```
-Natomiast funkcja reduce ma taką postać :
+Function reduce looks like this :
 ```javascript
 function(key, values) {
   return values.toString();
@@ -19,25 +19,22 @@ function(key, values) {
 
 ![](https://cloud.githubusercontent.com/assets/5136443/5631485/647e413e-95c7-11e4-8f03-e635f9fb534a.png)
 
-Jak widzimy mapReduce redukuje 914 slów co jest równoznaczne z otrzymaniem 914 słów które są anagramami innych słów.
-
-aby zobaczyć wszystkie anagramy możemy użyc funkcji
+As we can see mapReduce reduce 914 words what mean that there is 914 words which are anagrams different words.
+In order to show all anagrams we can use:
 ```javascript
 db.anag.out.find({$where:"this.value.length>6"})
 ```
-Każda wartość która ma więcej niż 6 znaków zawiera więcej niż jedno słowo i jest anagramem.
 
-##Część druga Map reduce przeprowadzone na danych z serwisu Amazon
 
-Do zadania zostału użyte własne dane o nazwie Six Categories of Amazon Product Reviews pobraze z http://times.cs.uiuc.edu/~wang296/Data/ .
-Dane zawierają informacje o produktach znajdujących się w sklepie Amazon. Większość produktów jest recenzowana i to właśnie na recenzjach 
-tych produktów zamierzam przeprowadzić MapReduce. Każdy produkt może być zrecenzowany kilka razy.
-Każdy dokument ma następującą strukturę
+##Secound part Map reduce on data from Amazon
+
+To do that exercise I used data from  Six Categories of Amazon Product Reviews downloaded http://times.cs.uiuc.edu/~wang296/Data/ .
+Data contain information about products in Amazon shop.Most of products is reviewed and on this reviews I will do mapRduce. Every product can be reviewed couple of times.  
+Each document has fallowing structure
 ![](https://cloud.githubusercontent.com/assets/5136443/5702245/a6c2df2a-9a57-11e4-88d9-6ffe258d278c.png)
-Jak widzimy Reviews jest tablicą obiektów json. Taka struktura dokumentu powoduje że w funkcji Map konieczne bedzie użycie podwojnej pętli forEach.
+ As we can se Reviews is an array of JSON objects.In such a structure I will use double forEach loop in order to do mapReduce.
 
-
-Funkcja Map wygląda następująco:
+Function Map looks like this:
 ```javascript
 m = function() {
     var reviews =  this.Reviews;
@@ -58,7 +55,7 @@ m = function() {
     }
 }
 ```
-Funkcja Reduce standardowo wygląda tak :
+Function Reduce looks like this :
 
 ```javascript
 r = function(key, values) {
@@ -66,21 +63,21 @@ r = function(key, values) {
 };
 ```
 
-Natomiast wynik map reduce jest uzyskany za pomocą użycia następującej komendy:
+We use fallowing command to get a result:
 ```javascript
 result = db.amazonReview.mapReduce(m,r,{out:revWord});
 ```
 ![](https://cloud.githubusercontent.com/assets/5136443/5701796/cec5fc66-9a50-11e4-9297-dd296279af33.png)
-Jak widzimy mongo wyemitowało 1146677 słów a wynik został zredukowany do 8469 słów.
-Aby znaleźć pierwsze dwadzieścia najczęściej występujących słów użyłem komendy:
+As we can see mongoe emited 1146677 words and result become reduced to 8469 words.
+In order to find twenty most popular words I used:
 ```javascript
 db.revWord.find().limit(20).sort({value:-1})
 ```
-Wynik jest następujący:
+Result::
 
 
 ![](https://cloud.githubusercontent.com/assets/5136443/5701798/d2000d2c-9a50-11e4-9679-29456f68bf93.png)
 
-Jak widzimy najczęściej powtarzają się typowe angielskie słowa takie jak his, he, was.
-Znajdujemy również słowa odnoszące się do czynności zakupu tz. purchased, bought.
-Często występuje słowo love które prawdopodobnie często jest wyrazem zachwytu danym produktem. 
+As we can see most popular are typical english words like his, he, was.
+We also find words related with shopping hence,purchased, bought.
+often occur word love which is probably expression of delight by particular product.
