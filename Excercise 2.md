@@ -1,4 +1,4 @@
-#Secound Excercise
+#Secound Exercise
 ##1.
 I use Individual household electric power consumption to prepare analysis  <a href="http://archive.ics.uci.edu/ml/datasets/Individual+household+electric+power+consumption">Individual household electric power consumption</a>. It contain almost two millions of records about usage of electric energy measured in one household for four years in one minute interval.
 

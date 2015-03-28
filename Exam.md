@@ -68,7 +68,7 @@ We use fallowing command to get a result:
 result = db.amazonReview.mapReduce(m,r,{out:revWord});
 ```
 ![](https://cloud.githubusercontent.com/assets/5136443/5701796/cec5fc66-9a50-11e4-9297-dd296279af33.png)
-As we can see mongoe emited 1146677 words and result become reduced to 8469 words.
+As we can see mongo emitted 1146677 words and result become reduced to 8469 words.
 In order to find twenty most popular words I used:
 ```javascript
 db.revWord.find().limit(20).sort({value:-1})
@@ -78,6 +78,6 @@ Result::
 
 ![](https://cloud.githubusercontent.com/assets/5136443/5701798/d2000d2c-9a50-11e4-9679-29456f68bf93.png)
 
-As we can see most popular are typical english words like his, he, was.
+As we can see most popular are typical English words like his, he, was.
 We also find words related with shopping hence,purchased, bought.
 often occur word love which is probably expression of delight by particular product.
